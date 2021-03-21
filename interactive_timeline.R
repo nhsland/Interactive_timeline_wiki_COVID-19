@@ -1,5 +1,5 @@
 
-library("ggrepel")
+library(ggrepel)
 library(shiny)
 library(ggplot2)
 library(ggthemes)
@@ -7,11 +7,11 @@ library(plotly)
 library(dplyr)
 library(lubridate)
 
-dfcr=read.csv("dfcr_annot3_doi_filtered.csv",sep=";")
+dfcr=read.csv("opensource.csv",sep=";")
 dfcr$tsc=dmy(gsub("/","-",dfcr$tsc))
 
 
-dfcr$wiki=paste("http://en.wikipedia.org/?curid=",dfcr$pageid,sep="")
+dfcr$wiki=paste(dfcr$pageid)
 
 dfcr$label=paste('<a href="',dfcr$wiki,'">',dfcr$art,'</a>',sep="")
 
@@ -63,8 +63,8 @@ ui <- fluidPage(
 
 server <- function(input, output, session) {
   output$timeline <- renderTimevis({
-    timevis(data,groups = data.frame(id = 1:6, content = levels(unique(dfcr$type))),zoomFactor=0.1)%>%setWindow("2004-04-01","2006-01-01")%>%
-      setGroups(data.frame(id = 1:6, content = levels(unique(dfcr$type))))
+    timevis(data,groups = data.frame(id = 1:2, content = levels(unique(dfcr$type))),zoomFactor=0.1)%>%setWindow("2015-04-01","2020-01-01")%>%
+      setGroups(data.frame(id = 1:2, content = levels(unique(dfcr$type))))
     
   })
 }
